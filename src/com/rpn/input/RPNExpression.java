@@ -1,6 +1,9 @@
 package com.rpn.input;
 
-public class InputParser {
+public class RPNExpression {
+
+    private String inputExpression;
+
     public String getInputExpression() {
         return inputExpression;
     }
@@ -8,7 +11,5 @@ public class InputParser {
     public void setInputExpression(String inputExpression) {
         this.inputExpression = inputExpression;
     }
-
-    private String inputExpression;
 
 }
