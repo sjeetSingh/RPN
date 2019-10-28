@@ -5,12 +5,14 @@ import com.rpn.input.RPNExpression;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.EmptyStackException;
 
 // The Java class will be hosted at the URI path "/helloworld"
 @Path("/rpncalculator")
 public class RPNCalculateAPIService {
 
-    private static final String INVALID_EXPRESSION_EMPTY = "Expression is empty!";
+    private static final String INVALID_EXPRESSION_EMPTY = "Expression is empty! Please add a valid RPN expression.";
+    private static final String INVALID_EXPRESSION_EXTRA_OPERATOR = "Extra operator(s) in the expression! Please check the expresssion.";
 
     private RPNCalculateService rpnCalculateService = new RPNCalculateService();
 
@@ -29,6 +31,13 @@ public class RPNCalculateAPIService {
             return Response.status(400).entity(INVALID_EXPRESSION_EMPTY).build();
         }
         String[] expressionArr = inputRPNExpressionString.getInputExpression().split(",");
+
+        try{
+            rpnCalculateService.performRPNCalculate(expressionArr);
+        }
+        catch (EmptyStackException emptyStackException){
+            return Response.status(400).entity(INVALID_EXPRESSION_EXTRA_OPERATOR).build();
+        }
 
         return rpnCalculateService.performRPNCalculate(expressionArr);
     }
