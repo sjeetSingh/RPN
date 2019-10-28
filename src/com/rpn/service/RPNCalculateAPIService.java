@@ -33,13 +33,11 @@ public class RPNCalculateAPIService {
         String[] expressionArr = inputRPNExpressionString.getInputExpression().split(",");
 
         try{
-            rpnCalculateService.performRPNCalculate(expressionArr);
+            return rpnCalculateService.performRPNCalculate(expressionArr);
         }
         catch (EmptyStackException emptyStackException){
             return Response.status(400).entity(INVALID_EXPRESSION_EXTRA_OPERATOR).build();
         }
-
-        return rpnCalculateService.performRPNCalculate(expressionArr);
     }
 
 }
